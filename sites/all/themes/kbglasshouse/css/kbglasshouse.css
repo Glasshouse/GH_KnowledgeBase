@@ -1,0 +1,15 @@
+td.empty {
+    padding: 0;
+    margin: 0;
+    width: 0;
+}
+
+div#toolbar div.toolbar-shortcuts ul li a {
+    background-image: none;
+}
+
+pre code {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
