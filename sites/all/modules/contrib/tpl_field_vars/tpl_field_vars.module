@@ -572,6 +572,9 @@ function tpl_field_vars_file_fieldvalue(&$vars, $field, $field_name, $varname, $
     'filename',
     'filesize',
     'description',
+    'alt',
+    'title',
+    'display',
   );
   
   tpl_field_vars_fieldvalue_buildarray($vars, $field, $varname, $valuekeys);

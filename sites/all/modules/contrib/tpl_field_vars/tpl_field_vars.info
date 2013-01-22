@@ -3,9 +3,9 @@ description = Provides super themer-friendly template variables for entity field
 core = 7.x
 files[] = tpl_field_vars.module
 
-; Information added by drupal.org packaging script on 2012-09-12
-version = "7.x-1.12"
+; Information added by drupal.org packaging script on 2012-12-19
+version = "7.x-1.14"
 core = "7.x"
 project = "tpl_field_vars"
-datestamp = "1347487165"
+datestamp = "1355891024"
 
