@@ -1,16 +1,26 @@
-6.x-1.0: First 7.x release.
+6.x-1.0-ALPHA1: First 6.x version for Taxonomy Block (now support multi languages)
 
-7.x 1.1
-----------------------
-added title attribute http://drupal.org/node/1567486
-own theming function for better html output: http://drupal.org/node/1545156
-i18n support http://drupal.org/node/1540828
-added to right menu, config link on module page: http://drupal.org/node/1229414
-.info fix http://drupal.org/node/1502936
+6.x-1.0-ALPHA2: Fixed: change taxonomy_block_i18n to taxonomy_block
 
+6.x-1.0-ALPHA3: Fixed: count child nodes
 
-7.x 1.2
-----------------------
-renamed taxonomy_block.settings.inc to taxonomy_block.admin.inc
-added new setting to inject a custom link at the beginning of the block. why? to be able to add a custom link to an overview page, for example with images using views.
-sample www.texturecase.com first item on the left menu.
+6.x-1.0-ALPHA4: New: use dhtml_menu module for tree like navigation
+
+6.x-1.0-ALPHA5: Fixed: disable dhtml_menu support
+
+6.x-1.0-BETA1:  Fixed: check if i18n module available
+
+6.x-1.0-BETA2:  New: able to set maksimum term to display
+
+6.x-1.0-BETA3:  Fixed: Use taxonomy_term_path($t) to fetch term path, compability to taxonomy_redirect module
+                Fixed: Block title support multi-language
+                New: Order by name/weight in Ascending/Descending
+
+6.x-1.0-BETA4:  New: show vocabulary name instead vid in settings page
+
+6.x-1.0-BETA5:  Fixed: now only count Published node
+                Fixed: move package to "Taxonomy"
+								
+6.x-1.0-BETA6:  Fixed: wrong </li> position
+                Fixed: show node count by default
+								

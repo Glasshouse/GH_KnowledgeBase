@@ -15,9 +15,10 @@
  *   NodeOne - www.nodeone.se
  */
 
-$ajax_markup_exist = module_exists('ajax_markup') ? 'ajax_markup_exist' : NULL;
-$imce_url = module_exists('imce') ? url('imce/browse') : NULL;
-$js_imceURL = $imce_url ? "markdownEditor.settings.IMCEPath = '$imce_url';" : '';
+// Only load this file if $eid is set.
+if (!isset($eid)) {
+  return;
+}
 
 // Define buttons
 //
@@ -29,6 +30,7 @@ $js_imceURL = $imce_url ? "markdownEditor.settings.IMCEPath = '$imce_url';" : ''
 // 5: weight
 
 $mde_buttons = array();
+$ajax_markup_exist = 'Lets start by assuming it does not exist';
 
 // Increment counter for array keys
 $i = 0;
@@ -36,8 +38,8 @@ $i = 0;
 $mde_buttons[$i++] = array(
   $eid,
   t("Make selected text into a header"),
-  "js: $js_imceURL markdownEditor.header();",
-  "md-make-header.gif",
+  "js: markdownEditor.header();",
+  "md-make-header@2x.png",
   "H",
   -10,
 );
@@ -46,16 +48,16 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Italics: Make selected text emphasized"),
   "js: markdownEditor.emphasis();",
-  "md-make-em.gif",
+  "md-make-em@2x.png",
   "I",
   -9,
 );
 
 $mde_buttons[$i++] = array(
   $eid,
-  t("Make selected text strong"),
+  t("Bold: Make selected text strong"),
   "js: markdownEditor.strongEmphasis();",
-  "md-make-strong.gif",
+  "md-make-strong@2x.png",
   "B",
   -8,
 );
@@ -64,7 +66,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Format selected text as code"),
   "js: markdownEditor.codeInline();",
-  "md-make-code.gif",
+  "md-make-code@2x.png",
   "",
   -7,
 );
@@ -73,7 +75,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Format selected text as a code block"),
   "js: markdownEditor.codeBlock();",
-  "md-make-code-block.gif",
+  "md-make-code-block@2x.png",
   "",
   -6,
 );
@@ -82,7 +84,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Make selected text into a block quote"),
   "js: markdownEditor.blockQuote();",
-  "md-make-quote.gif",
+  "md-make-quote@2x.png",
   "Q",
   -5,
 );
@@ -91,7 +93,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Make selected text into an ordered list (numbered)"),
   "js: markdownEditor.orderedList();",
-  "md-make-ol.gif",
+  "md-make-ol@2x.png",
   "O",
   -4,
 );
@@ -100,7 +102,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Make selected text into an unordered list (bullets)"),
   "js: markdownEditor.unorderedList();",
-  "md-make-ul.gif",
+  "md-make-ul@2x.png",
   "N",
   -3,
 );
@@ -108,8 +110,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a definition list"),
-  "js: $js_imceURL new markdownEditor.DefinitionList();",
-  "md-add-dl.gif",
+  "js: new markdownEditor.DefinitionList();",
+  "md-add-dl@2x.png",
   "",
   -2,
 );
@@ -117,8 +119,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a table"),
-  "js: $js_imceURL new markdownEditor.Table();",
-  "md-add-table.gif",
+  "js: new markdownEditor.Table();",
+  "md-add-table@2x.png",
   "T",
   -1,
 );
@@ -126,8 +128,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   ("Insert an abbreviation (word or acronym with definition)"),
-  "js: $js_imceURL markdownEditor.abbreviation();",
-  "md-add-abbreviation.gif",
+  "js: markdownEditor.abbreviation();",
+  "md-add-abbreviation@2x.png",
   "",
   0,
 );
@@ -135,8 +137,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a footnote"),
-  "js: $js_imceURL markdownEditor.footnote();",
-  "md-add-footnote.gif",
+  "js: markdownEditor.footnote();",
+  "md-add-footnote@2x.png",
   "F",
   1,
 );
@@ -144,8 +146,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Make text into an autolink (turns URLs in links, turns words into section identifiers for navigating the document)"),
-  "js: $js_imceURL markdownEditor.autoLink();",
-  "md-add-autolink.gif",
+  "js: markdownEditor.autoLink();",
+  "md-add-autolink@2x.png",
   "A",
   2,
 );
@@ -153,8 +155,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Make text into a link (turns text into a link with more options)"),
-  "js: $js_imceURL markdownEditor.link();",
-  "md-make-link.gif",
+  "js: markdownEditor.link();",
+  "md-make-link@2x.png",
   "L",
   3,
 );
@@ -162,8 +164,8 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert an image"),
-  "js: $js_imceURL markdownEditor.image();",
-  "md-add-picture.gif",
+  "js: markdownEditor.image();",
+  "md-add-picture@2x.png",
   "M",
   4,
 );
@@ -172,7 +174,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Insert a line break"),
   "js: markdownEditor.lineBreak();",
-  "md-add-line.gif",
+  "md-add-line@2x.png",
   "R",
   5,
 );
@@ -181,7 +183,7 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Insert a horizontal ruler (horizontal line)"),
   "js: markdownEditor.horizontalRuler();",
-  "md-add-hr.gif",
+  "md-add-hr@2x.png",
   "",
   6,
 );
@@ -190,8 +192,8 @@ $mde_buttons[$i++] = array(
   $eid,
   t("Teaser break"),
   "<!--break-->",
-  "teaserbr.png",
-  "T",
+  "teaserbr@2x.png",
+  "",
   7,
 );
 
@@ -200,17 +202,18 @@ if (module_exists('ajax_markup')) {
     $eid,
     t("Preview"),
     "js: E.prvAjax();",
-    "preview.png",
+    "preview@2x.png",
     "P",
     8,
   );
+  $ajax_markup_exist = 'We have ajax markup!';
 }
 
 $mde_buttons[$i++] = array(
   $eid,
   t("Help"),
   "js: E.help('fadeIn');",
-  "md-help.gif",
+  "md-help@2x.png",
   "",
   9,
 );

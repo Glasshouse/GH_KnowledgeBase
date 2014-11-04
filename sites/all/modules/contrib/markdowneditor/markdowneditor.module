@@ -12,7 +12,7 @@
 /**
  * Implements hook_form_alter().
  */
-function markdowneditor_form_system_modules_alter(&$form, &$form_state) {
+function markdowneditor_form_system_modules_alter(&$form, &$form_state, $form_id) {
   $form['#submit'][] = '_markdowneditor_form_system_modules_submit';
 }
 
@@ -27,9 +27,6 @@ function _markdowneditor_form_system_modules_submit($form, &$form_stat) {
  * Update button definitions when moodules MDE depends on are enabled/disabled
  */
 function _markdowneditor_update_buttons() {
-  // Set up variables
-  $path = drupal_get_path('module', 'markdowneditor');
-
   // Load buttons
   $buttons = variable_get('markdowneditor_buttons', FALSE);
 
@@ -37,12 +34,13 @@ function _markdowneditor_update_buttons() {
   $eid = variable_get('markdowneditor_eid');
 
   // Include default button definitions
-  require_once DRUPAL_ROOT . '/' . $path . '/markdowneditor.buttons.inc';
+  module_load_include('inc', 'markdowneditor', 'markdowneditor.buttons');
+  //require_once DRUPAL_ROOT . '/' . $path . '/markdowneditor.buttons.inc';
 
   if ($buttons && !empty($mde_buttons)) {
     // Calculate table content fingerprint and compare to stored copy
     // only update table if contents have changed
-    $fprint = md5($ajax_markup_exist . $js_imceURL);
+    $fprint = md5($ajax_markup_exist);
 
     if ($fprint != variable_get('markdowneditor_content_fprint', NULL)) {
 

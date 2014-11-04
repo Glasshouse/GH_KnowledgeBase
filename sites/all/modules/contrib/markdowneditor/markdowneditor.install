@@ -63,7 +63,11 @@ function _markdowneditor_insert_latest($name = 'default') {
   $path = drupal_get_path('module', 'markdowneditor');
 
   // Set up library paths
-  $library_paths = "$path/library/markdown/markdowneditor.js\n$path/library/markdown/markdowneditor.css\n%BUEDITOR/library/bue.min.default.js\n%BUEDITOR/library/bue.popup.css";
+  $library_paths = '';
+  $library_paths .= "$path/library/markdown/markdowneditor.css\n";
+  $library_paths .= "$path/library/markdown/markdowneditor_popup.css\n";
+  $library_paths .= "%BUEDITOR/library/bue.min.default.js\n";
+  $library_paths .= "$path/library/markdown/markdowneditor.js";
 
   // Add editor
   $eid = db_insert('bueditor_editors')
@@ -108,8 +112,18 @@ function _markdowneditor_insert_latest($name = 'default') {
   variable_set('markdowneditor_eid', $eid);
 
   // Calculate and store a hash of configuration values so we can detect changes later on
-  $fprint = md5($ajax_markup_exist . $js_imceURL);
+  $fprint = md5($ajax_markup_exist);
   variable_set('markdowneditor_content_fprint', $fprint);
 
   return $eid;
+}
+
+/**
+ * Update icons file extension from gif to png.
+ */
+function markdowneditor_update_7100() {
+  db_update('bueditor_buttons')
+    ->condition('icon', db_like('md-') . '%', 'LIKE')
+    ->expression('icon', 'replace(icon, :old_ext, :new_ext)', array(':old_ext' => '.gif', ':new_ext' => '.png'))
+    ->execute();
 }
