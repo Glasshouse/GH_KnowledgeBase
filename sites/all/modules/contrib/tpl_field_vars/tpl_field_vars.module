@@ -51,17 +51,36 @@ function tpl_field_vars($entity, $options = array()) {
   // Special handling for user picture, which isn't actually a Field
   // API field, but which we want to treat just like any other image
   // field.
-  if ($entity_type == 'user' && !empty($entity->picture->uri)) {
-    $field_type = 'image';
-    $fieldvalue_func = 'tpl_field_vars_' . $field_type . '_fieldvalue';
+  if ($entity_type == 'user') {
+    $user_picture_uri = NULL;
 
-    if (function_exists($fieldvalue_func)) {
-      $varname = 'picture';
-      $field = array(0 => (array)$entity->picture);
-      $fieldvalue_func($vars, $field, NULL, $varname, NULL, $options);
+    if (!empty($entity->picture->uri)) {
+      $user_picture_uri = $entity->picture->uri;
+    }
+    elseif (variable_get('user_picture_default', '')) {
+      $user_picture_uri = variable_get('user_picture_default', '');
+    }
 
-      if (!empty($debug) && !empty($vars[$varname])) {
-        tpl_field_vars_debug($vars[$varname], $varname);
+    if (!empty($user_picture_uri)) {
+      $field_type = 'image';
+      $fieldvalue_func = 'tpl_field_vars_' . $field_type . '_fieldvalue';
+
+      if (function_exists($fieldvalue_func)) {
+        $varname = 'picture';
+        $field = array();
+
+        if (!empty($entity->picture->uri)) {
+          $field[] = (array) $entity->picture;
+        }
+        else {
+          $field[] = array('uri' => $user_picture_uri);
+        }
+
+        $fieldvalue_func($vars, $field, NULL, $varname, NULL, $options);
+
+        if (!empty($debug) && !empty($vars[$varname])) {
+          tpl_field_vars_debug($vars[$varname], $varname);
+        }
       }
     }
   }
@@ -503,7 +522,11 @@ function tpl_field_vars_datetime_fieldvalue(&$vars, $field, $field_name, $varnam
     return;
   }
 
-  $date_format = date_format_type_format($field_instance['display']['default']['settings']['format_type']);
+  $date_format = (
+    isset($field_instance['display']['default']['settings']['format_type'])
+      ? date_format_type_format(
+        $field_instance['display']['default']['settings']['format_type'])
+      : '');
 
   foreach (array_keys($vars[$varname]) as $k) {
     if (!empty($vars[$varname][$k])) {
